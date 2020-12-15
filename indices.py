@@ -25,10 +25,10 @@ from geojson import FeatureCollection
 #Required when I have the full image
 l=os.listdir()
 #print(l)
-b3=r.open(l[5])
-b4=r.open(l[6])
-b8=r.open(l[7])
-b11=r.open(l[4])
+b3=r.open(l[7])
+b4=r.open(l[8])
+b8=r.open(l[9])
+b11=r.open(l[6])
 #use reproject code and use output of reproject in the vect variable
 #check the projection of the shapefile. must be EPSG:32643
 #lat=input("Enter the latitude of the WCS")
@@ -65,6 +65,7 @@ def clip(raster,out):
 
 def Evapotranspiration():
 
+    
     clipb4=r.open('b4_clip.tif')
     clipb8=r.open('b8_clip.tif' )  
 
@@ -101,17 +102,20 @@ def Evapotranspiration():
     barren=np.count_nonzero(ndvi_rc==1)
     #print('barren',barren*100)
     #barren_et=((barren*100)-5883000)*0.05
-    #barren_et=12598100*0.05#konambe
-    barren_et=2700000*0.05#kanhur
+    barren_et=12598100*0.05#konambe
+    #barren_et=2700000*0.05#kanhur
+    #barren_et=400000*0.05#Shastrinagar
     shrubs=np.count_nonzero(ndvi_rc==2)
     #print('shrubs',shrubs*100)
     #shrubs_et=shrubs*100*0.2
-    #shrubs_et=4642200*0.3#konambe
-    shrubs_et=5200000*0.4#kanhur
+    shrubs_et=4642200*0.3#konambe
+    #shrubs_et=5200000*0.4#kanhur
+    #shrubs_et=300000*0.3#Shastrinagar
     forest=np.count_nonzero(ndvi_rc==3)
     #forest_et=forest*100*0.8
-    #forest_et=295200*0.8#Konambe
-    forest_et=224000*0.8#Kanhur
+    forest_et=295200*0.8#Konambe
+    #forest_et=224000*0.8#Kanhur
+    #forest_et=0*0.8#Shastrinagar
     #print('forest',forest*100)
     et=[barren_et,shrubs_et,forest_et] #et in m^3
     return et  
@@ -200,7 +204,7 @@ def WCS(storage):#for ENB, CNB, percolation tanks, Gabion and Recharge shaft
     infilteration=fillings*storage*.5
     return infilteration
 def CCT(storage):
-    fillings =37#number of rainy
+    fillings =14#number of rainy
     infilteration=fillings*storage*0.1/1000
     soil_mois=fillings*storage*0.55/1000#10% seepage,35% evaporation rest soil moisture
     return infilteration,soil_mois

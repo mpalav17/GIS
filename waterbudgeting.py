@@ -11,7 +11,7 @@ def main():
         village_name=input("Enter the village name")
         show_water_budget(district_name,tehsil_name,village_name)
 
-def enter_primary_Details():
+def enter_primary_Details():#field worker function
     print()
     parent_dir="C:/Users/Rishabh/waterbudgeting/"
     print("Basic village details")
@@ -185,7 +185,8 @@ def show_water_budget(d,t,v):
     df['Total_list']=total_list
     df.to_csv(home_dir+"Kharif_crops.csv",index=False)
     #print('Crop water requirment for grape is in 60 hectares of land is 720TCM')
-    #total_cropreq=total_cropreq+720+142.5#considered fodders also for kharif, later change it in main code
+    #grape drip is considered at 100% for 48% effciency
+    total_cropreq=total_cropreq+375+142.5#considered fodders also for kharif, later change it in main code
     print()
     print("Total amount of surface water impounded")
     df=pd.read_csv(home_dir+"WCS_details.csv")
@@ -206,14 +207,15 @@ def show_water_budget(d,t,v):
             total_infilteration_nonmon=total_infilteration_nonmon+infilteration_nonmon
             print("The seepage from ",df['Number'][i]," ", df['Structure name'][i]," during the monsoon is ",infilteration,"TCM")
             print("The surface water in ",df['Number'][i]," ", df['Structure name'][i]," after the monsoon is ",surface_water,"TCM")
-            total_area_WCS=total_area_WCS+(df['Number'][i]*df['Area'][i])
+            total_area_WCS=total_area_WCS+(df['Number'][i]*df['Area'][i]*1000)
             print()
         elif(df['Structure name'][i]=='Konambe dam'):
             [infilteration,surface_water,infilteration_nonmon]=ind.dam(df['Storage capacity'][i],df['Area'][i])
             infilteration=infilteration*df['Number'][i]
             infilteration_nonmon=infilteration_nonmon*df['Number'][i]
+            total_infilteration_nonmon=total_infilteration_nonmon+infilteration_nonmon
             surface_water=surface_water*df['Number'][i]
-            total_area_WCS=total_area_WCS+df['Area'][i]
+            total_area_WCS=total_area_WCS+(df['Area'][i]*1000)
             surface_water_kharif=surface_water_kharif+650#full 1501 tcm wont be available to be used for the village
             print(infilteration_nonmon)
             print("The seepage from ",df['Number'][i]," ", df['Structure name'][i]," during the monsoon is ",infilteration,"TCM")
@@ -242,12 +244,13 @@ def show_water_budget(d,t,v):
     infilteration_village=infilteration_village+tot_infilteration
     
     #Need to subtract protective irrigation if present
-    
 
     print()
     print("Total amount of surface water impounded by lined farm ponds")
     df=pd.read_csv(home_dir+"farmponds_lined.csv")
-    surface_water=df['Capacity'][0]*df['Lined farm pond'][0]
+    surface_water_artificial=df['Capacity'][0]*df['Lined farm pond'][0]*0.7
+    surface_water_natural=df['Capacity'][0]*df['Lined farm pond'][0]*0.3
+    surface_water=surface_water_artificial+surface_water_natural
     #surface_water=surface_water-((df['Area'][0]*1900/1000)/1000)
     print("The surface water available in ",df['Lined farm pond'][0]," lined farm ponds after the monsoon is ",surface_water,"TCM")
     #print('u-lined',usable_water)
@@ -266,7 +269,7 @@ def show_water_budget(d,t,v):
     total_infilteration_nonmon=total_infilteration_nonmon+(infilteration_nonmon*df['Non Lined farm pond'][0])
     total_area_WCS=total_area_WCS+(df['Area'][0]*df['Non Lined farm pond'][0])
     
-    #print("total nonmon", total_infilteration_nonmon)
+    print("total nonmon", total_infilteration_nonmon)
     #surface_water_kharif=surface_water_kharif-1501+500#this is temporary, just subtracting konambe dam surface water
 
 #Pending work
@@ -300,7 +303,7 @@ def show_water_budget(d,t,v):
     a=int(input("Press 1 to continue with rabi planning"))
     if(a==1):
         rabi_req=input_rabi(d,t,v)
-    annual_gross_draft=(.1*total_cropreq)+sum_domreq+rabi_req-(surface_water_kharif-total_infilteration_nonmon)-(.1*rabi_req)
+    annual_gross_draft=(.1*total_cropreq)+sum_domreq+rabi_req-(surface_water_kharif-surface_water_artificial-total_infilteration_nonmon)-(.1*rabi_req)
     print("Annual gross draft ",annual_gross_draft)
     groundwater=groundwater_avail(worthy_area)
     print('Groundwater available in the village', groundwater)
@@ -308,8 +311,12 @@ def show_water_budget(d,t,v):
     print('Stage of groundwater developement is ',stage_of_development,'%')
 #Ground water availabilty
 def groundwater_avail(worthy_area):
-    pre_monlevel=8.7 # for village kanhur (Pabal area)
-    post_monlevel=1.6 # for village kanhur (Pabal area)
+    #pre_monlevel=8.7 # for village kanhur (Pabal area)
+    #post_monlevel=1.6 # for village kanhur (Pabal area)
+    pre_monlevel=11#13.5 # for village konambe
+    post_monlevel=2#6# for village konambe
+    #pre_monlevel=12.5 # for village Shastrinagar
+    #post_monlevel=2.75 # for village Shastrinagar
     specific_yield=0.02 
     groundwater=specific_yield*(pre_monlevel-post_monlevel)*worthy_area*10
 
@@ -376,8 +383,10 @@ def fetch_loc(name):
 def getArea(n,t,d):
     if(n == 'Konambe'):
         area=2022.1
-    else:
+    elif(n=='Kanhur'):
         area=2633
+    elif(n=='Shastrinagar'):
+        area=311
     return area
 
 

@@ -14,10 +14,17 @@ def runoff(village_name):
     coeff3=0
     if(village_name=='Konambe'):
         dem_path=os.path.join(os.getcwd(),'Konambe_dem_clipped.tif')
-        coeff1=1.0791
-        coeff2=1.6186
-        coeff3=2.1583
-    else:
+        coeff1=0.6543#1.0791
+        coeff2=0.9814#1.6186
+        coeff3=1.3086#2.1583
+    elif(village_name=='Shastrinagar'):
+        return 299,240
+    elif(village_name=='Watershed'):
+        dem_path=os.path.join(os.getcwd(),'Watershed_dem_fill/dem_1.tif')
+        coeff1=0.6543#1.0791
+        coeff2=0.9814#1.6186
+        coeff3=1.3086#2.1583
+    elif(village_name=='Kanhur'):
         dem_path=os.path.join(os.getcwd(),'Kanhur_dem_fill/Kanhur_dem_fill.tif')
         coeff1=0.4293
         coeff2=0.6443
@@ -42,7 +49,7 @@ def runoff(village_name):
     area_ha1=area_m2_1*0.0001
     area_ha2=area_m2_2*0.0001
     area_ha3=area_m2_3*0.0001
-    #print('area',area_ha1+area_ha2)
+    print('area',area_ha1+area_ha2+area_ha3)
     worthy_area=area_ha1+area_ha2
     #coeff for rainfall 775mm
     runoff1=area_ha1*coeff1
@@ -53,6 +60,8 @@ def runoff(village_name):
     #runoff2=area_ha2*1.3878
     #runoff3=area_ha3*1.8496
     tot_runoff=runoff1+runoff2+runoff3
+    #print('Hello',tot_runoff)
+    #print('Hello',worthy_area)
     return tot_runoff,worthy_area
 
-#r=runoff()
+#runoff('Konambe')

@@ -8,14 +8,17 @@ import pandas as pd
 
 import datetime
 
-#crop = ['Wheat']
-#sowdates = ['30-11-2020']
-#area_crop = [27]
+#crop = ['Rice']
+#sowdates = ['01-06-2020']
+#area_crop = [1]
 #print("Hello")
 def cropreq(crop, sowdates, area_crop,t,village):#crop_name, sow_date
     tot_requirement=0
     monthly_list=[]
     total_list=[]
+    #print(crop)
+    #print(sowdates)
+    #print(area_crop)
     for i in range(0,len(crop)):
         #df = pd.read_csv('days_crop.csv')
         name = crop[i]
@@ -42,6 +45,7 @@ def cropreq(crop, sowdates, area_crop,t,village):#crop_name, sow_date
                 days_scrop.append(df['mid_stage'][j])
                 days_scrop.append(df['late_stage'][j])
         crop_grow=days_scrop# extract dynamically from the database, this is the growth stage of the crop
+        #print(crop_grow)
         kc_scrop = []
         df = pd.read_csv('kc_val_temp.csv')
         #df = pd.read_csv('kc_val.csv')
@@ -53,6 +57,7 @@ def cropreq(crop, sowdates, area_crop,t,village):#crop_name, sow_date
                 kc_scrop.append(df['mid_stage'][j])
                 kc_scrop.append(df['late_stage'][j])
         kc_crop=kc_scrop#[0.45,0.75,1.15,0.8]# extract dynamically from the database, this is the kc value of the crop
+        #print(kc_crop)
         kc_calibrate=[0,0,0,0,0,0,0,0,0,0,0,0]
         y_t = 0
         if(calendar.isleap(year)):
@@ -230,3 +235,4 @@ def kc_correction(name,kc_scrop,days_scrop,sow_date):
     #print(start_date_mid)
 
 #kc_correction('Maize-sweet',[0.4,0.8,1.15,1],[20,30,50,10],'10-06-20')
+

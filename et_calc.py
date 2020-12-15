@@ -66,7 +66,7 @@ def getMonth(i):
     return month[i]
 def getLatitude(village):
     #latitude in degrees of Sinnar
-    if(village == 'Konambe'):
+    if(village == 'Konambe' or village=='Shastrinagar'):
         return 19.84
     elif(village == 'Kanhur'):
         return 18.8250
@@ -74,11 +74,13 @@ def getElevation(village):
     #elvation of Konambe village in m
     if(village == 'Konambe'):
         return 561
+    elif(village== 'Shastrinagar'):
+        return 561
     elif(village == 'Kanhur'):
         return 560 #pune district
 def getTemperature(i,village):
     wb = xlrd.open_workbook(loc)
-    if(village=='Konambe'):
+    if(village=='Konambe' or village=='Shastrinagar'):
         sheet = wb.sheet_by_index(0)
     elif(village=='Kanhur'):
         sheet = wb.sheet_by_index(2)
@@ -128,7 +130,7 @@ def getWind(i,village):
     h=10
     #uz=0.447
     wb = xlrd.open_workbook(loc)
-    if(village=='Konambe'):
+    if(village=='Konambe' or village=='Shastrinagar'):
         sheet = wb.sheet_by_index(0)
         uz=sheet.cell_value(i+1,6)
     elif(village=='Kanhur'):
@@ -172,4 +174,4 @@ def getRadiation(lat,month,z,Tmax,Tmin,ea):
     #Net radiation
     Rn=Rns-Rnl
     return Rn
-#evapotrans('Kanhur')
+#evapotrans('Konambe')
