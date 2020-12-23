@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en"><Esri><CreaDate>20201220</CreaDate><CreaTime>10233700</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.5\ArcToolbox\Toolboxes\Spatial Analyst Tools.tbx\ExtractByMask" Date="20201220" Time="102337">ExtractByMask nashik_fill kirtangali_pcs "D:\Boond\Data\Drainage\Nashik (2)\Kirtangali\Kirtangali_dem\kirtangali_dem_fill.tif"</Process></lineage></DataProperties></Esri></metadata>
