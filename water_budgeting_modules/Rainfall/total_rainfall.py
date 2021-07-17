@@ -8,8 +8,9 @@ def rainfall(area,village_name):
     elif(village_name=='Shastrinagar'):
         rainfall_amt=650#1031
     elif(village_name=='Kanhur'):
-        rainfall_amt=500#550
+        rainfall_amt=550#500
     elif(village_name=='Kirtangali'):
         rainfall_amt=718#550
+    # extract other place compute here
     rainfall_avail=(rainfall_amt*area)/100
     return rainfall_avail

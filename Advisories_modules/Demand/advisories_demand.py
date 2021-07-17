@@ -8,7 +8,7 @@ def demandsidedrip(v,t,d,demand,avail):
    
     water_area = []
     for i in range(0,len(df)):
-        water_area.append(df['Total_list'][i]/df['Area'][i])
+        water_area.append(df['Total_list'][i]/df['Area'][i]) 
     df['water_intensity'] = water_area
     sum = df['water_intensity'].sum()
     weight = []
@@ -16,6 +16,7 @@ def demandsidedrip(v,t,d,demand,avail):
         weight.append(df['water_intensity'][i]/sum)
     df['weight'] = weight
     #print(weight)
+    final_drip = {}
     cwr = demand
     aval = avail
     old_drip = [0 for i in range(0,len(df))]
@@ -26,15 +27,17 @@ def demandsidedrip(v,t,d,demand,avail):
             if  cwr > aval :
                 if old_drip[j] + df['weight'][j] < 100 :
                     cwr = cwr - df['Total_list'][j] * df['drip_eff'][j]/100 * (old_drip[j] + df['weight'][j])/100
+                    #print(cwr)
                     old_drip[j] = old_drip[j] + df['weight'][j]
                     #print(df['weight'][j])
                     #print(df['Rabi crop'][j],'drip',old_drip[j])
+                    final_drip[df['Rabi crop'][j]] = old_drip[j]
             else:
                 break
         df['drip'] = old_drip
-    print(df['Rabi crop'])
-    print(old_drip)
-    return old_drip
+    #print(df['Rabi crop'])
+    #print(final_drip)
+    return final_drip
     '''drip only on onion and pea for shastrinagar
     area reduction on wheat and onion'''
-#demandsidedrip('Kanhur','Shirur','Pune',642,467)
+#demandsidedrip('Kanhur','Shirur','Pune',4745,4566)

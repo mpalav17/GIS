@@ -1,5 +1,4 @@
 crop,initial_stage,dev_stage,mid_stage,late_stage
-Bajra,35,40,50,25
 Barley,15,30,65,40
 Oats,15,30,65,40
 Wheat,15,30,65,40
@@ -16,22 +15,40 @@ Lentil,25,35,70,40
 Lettuce,35,50,45,10
 Maize-sweet,20,30,50,10
 Maize-grain,30,50,60,10
-Melon,30,45,65,20
+Watermelon,30,45,65,20
 Millet,20,30,55,35
 Onion-green,25,40,20,10
 Onion-dry,15,25,70,40
-Groundnut,30,40,45,25
+Rabi groundnut,30,40,45,25
+Kharif groundnut,30,40,45,25
+Summer groundnut,30,40,45,25
 Pea,20,30,35,15
 Pepper,30,40,110,30
 Potato,30,35,50,30
 Radish,10,10,15,5
-Sorghum,20,35,45,30
+Kharif jawar,20,35,45,30
 Soybean,20,30,70,30
 Spinach,20,30,40,10
 Squash,25,35,35,25
 Sugarbeet,45,65,80,40
-Sunflower,25,35,45,25
+Sunflower rabi,25,35,45,25
 Tomato,35,45,70,30
-Rice,30,30,40,30
+Rabi rice,30,30,40,30
+Kharif rice,30,30,40,30
 Pomegranate,21,77,56,210
 Grapes,30,61,183,91
+Banana,59,61,61,184
+Sugarcane,35,60,190,175
+Citrus,60,90,120,95
+Green chilli,30,40,110,30
+Urad,25,35,70,40
+Moong,25,35,70,40
+Rabi jawar,20,35,45,30
+Sunflower summer,25,35,45,25
+Turmeric,30,50,65,50
+Sesame,30,40,45,25
+Garlic,25,30,65,20
+Chawli,20,30,30,10
+Nagli,20,30,55,35
+Toor,30,50,65,50
+Saflower,25,35,45,25

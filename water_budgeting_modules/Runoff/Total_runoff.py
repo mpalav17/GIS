@@ -28,7 +28,7 @@ def runoff(village_name):
         coeff2=0.9814#1.6186
         coeff3=1.3086#2.1583
     elif(village_name=='Kanhur'):
-        dem_path=os.path.join(os.getcwd(),'Kanhur_dem_fill/Kanhur_dem_fill.tif')
+        dem_path=os.path.join('C:/Users/Rishabh/waterbudgeting/Data/Kanhur_dem_fill/Kanhur_dem_fill.tif')
         rainfall=550
         coeff=getCoeff(rainfall)
         coeff1=coeff[0]

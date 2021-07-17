@@ -6,7 +6,7 @@ Created on Wed Sep 16 20:15:10 2020
 
 @author: DELL
 """
-
+from shapely import speedups
 import rasterio as r
 import rasterio.plot
 import numpy as np
@@ -21,14 +21,14 @@ from rasterio.features import shapes
 import geopandas as gpd
 from geojson import FeatureCollection
 #import geopandas.clip
-
+speedups.disable()
 #Required when I have the full image
 l=os.listdir()
 print(l)
-b3=r.open(l[4])
-b4=r.open(l[5])
-b8=r.open(l[6])
-b11=r.open(l[3])
+b3=r.open(l[5])
+b4=r.open(l[6])
+b8=r.open(l[7])
+b11=r.open(l[4])
 #use reproject code and use output of reproject in the vect variable
 #check the projection of the shapefile. must be EPSG:32643
 #lat=input("Enter the latitude of the WCS")
@@ -103,24 +103,24 @@ def Evapotranspiration():
     #print('barren',barren*100)
     #barren_et=((barren*100)-5883000)*0.05
     #barren_et=3040000*0.1#kirtangali
-    barren_et=4170000*0.1#kirtangali updated as per my code
+    #barren_et=4170000*0.1#kirtangali updated as per my code
     #barren_et=12598100*0.05#konambe
-    #barren_et=2700000*0.05#kanhur
+    barren_et=2700000*0.05#kanhur
     #barren_et=400000*0.05#Shastrinagar
     shrubs=np.count_nonzero(ndvi_rc==2)
     #print('shrubs',shrubs*100)
     #shrubs_et=shrubs*100*0.2
     #shrubs_et=210000*0.4#kirthangali
-    shrubs_et=500000*0.4#kirthangali updated as per my code
+    #shrubs_et=500000*0.4#kirthangali updated as per my code
     #shrubs_et=4642200*0.4#0.2konambe and 0.4 for surplus year
-    #shrubs_et=5200000*0.4#kanhur
+    shrubs_et=5200000*0.4#kanhur
     #shrubs_et=300000*0.4#Shastrinagar
     forest=np.count_nonzero(ndvi_rc==3)
     #forest_et=forest*100*0.8
     #forest_et=354500*0.8#Kirtangali
-    forest_et=500000*0.8#Kirtangali updated as per my code
+    #forest_et=500000*0.8#Kirtangali updated as per my code
     #forest_et=295200*0.8#Konambe
-    #forest_et=224000*0.8#Kanhur
+    forest_et=224000*0.8#Kanhur
     #forest_et=0*0.8#Shastrinagar
     #print('forest',forest*100)
     et=[barren_et,shrubs_et,forest_et] #et in m^3

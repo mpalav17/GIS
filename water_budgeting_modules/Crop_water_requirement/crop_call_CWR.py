@@ -2,26 +2,45 @@ import os
 import pandas as pd
 import water_budgeting_modules.Crop_water_requirement.crop_water_req as cwr
 import water_budgeting_modules.Crop_water_requirement.et_calc as et_dyn
-def crop_call(v,t,d,season): 
+import mysql.connector
+import re
+
+mydb = mysql.connector.connect(
+    host = "localhost",
+    database = "boondv1",
+    user = "root",
+    password = "root"
+)
+
+def crop_call(v,t,d,vc,season): 
     print("Total crop water requirement of kharif crops")
     parent_dir="C:/Users/Rishabh/waterbudgeting/Data/"
     home_dir=parent_dir+d+"/"+t+"/"+v+"/"
     df=pd.read_csv(home_dir+season+"_crops.csv")
+    mycursor = mydb.cursor()
+    mycursor.execute("select Crop_name,Crop_area,Sow_date,Drip_area from crop_details_"+season+" where village_code ="+str(vc)+";")
+    res = mycursor.fetchall()
     crop=[]
     sow=[]
     area=[]
     drip=[]
+    for i in range(0,len(res)):
+        crop.append(res[i][0])
+        area.append(int(res[i][1]))
+        sow.append(res[i][2])
+        drip.append(int(res[i][3])/100)
+    print(crop,area)
     drip_eff=[]
     et=getET(v)
     for i in range(0,len(df)):
-        crop.append(df[season+' crop'][i])
-        sow.append(df['Sow date'][i])
-        area.append(df['Area'][i])
-        drip.append(df['drip'][i])
+        # crop.append(df[season+' crop'][i])
+        # sow.append(df['Sow date'][i])
+        # area.append(df['Area'][i])
+        # drip.append(df['drip'][i])
         drip_eff.append(df['drip_eff'][i])
-    [total_cropreq,monthly_list,total_list]=cwr.cropreq(crop,sow,area,drip,drip_eff,et)
-    df['Monthly list']=monthly_list
-    df['Total_list']=total_list
+    [total_cropreq,monthly_list,total_list,crop_coefficient]=cwr.cropreq(crop,sow,area,drip,drip_eff,et,d,t,season,vc)
+    #df['Monthly list']=monthly_list#?
+    #df['Total_list']=total_list#?
     df.to_csv(home_dir+season+"_crops.csv",index=False)
     return total_cropreq
 def getET(village):

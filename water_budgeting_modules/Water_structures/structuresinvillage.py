@@ -7,8 +7,8 @@ def storage_tanks(storage,area):#village unlinedfarm ponds
     days_monsoon=90
     days_nonmon=120
     #evaporation_monsoon=(water_area*1900/1000)/1000
-    infilteration=(water_area*days_monsoon*1.44/1000)/1000#seepage during monsoon
-    infilteration_nonmon=(water_area*days_nonmon*1.44/1000)/1000
+    infilteration=(water_area*days_monsoon*1.44/1000)#seepage during monsoon
+    infilteration_nonmon=(water_area*days_nonmon*1.44/1000)
     surface_water=storage-(infilteration)
     return infilteration,surface_water,infilteration_nonmon
 def KT_weir(storage,area):# K T weir
@@ -30,12 +30,13 @@ def dam(storage,area):# minor irrigation project
     average_land=1.34
     water_req=1#1000 mm
     people_entitled=43
-    surface_water=average_land*water_req*people_entitled*10
+    surface_water=average_land*water_req*people_entitled*10/1000
     return infilteration,surface_water,infilteration_nonmon
 
 def WCS(storage):#for ENB, CNB, percolation tanks, Gabion and Recharge shaft
     fillings=2
-    infilteration=fillings*storage*.5
+    print(storage)
+    infilteration=fillings*float(storage)*.5
     return infilteration
 def CCT(storage,length,area):
     loc='C:/Users/Rishabh/waterbudgeting/Data/Stenges_Table.xlsx'#number of rainy
